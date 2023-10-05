@@ -10,7 +10,7 @@ namespace GameOfLife2
         private bool[,] _field;
         private bool _isPaused = false;
         private bool _updatingSpeed = false;
-        private Stack<bool[,]> _history;
+        private Stack<bool[,]> _history = new Stack<bool[,]>();
 
         public Form1()
         {
@@ -37,7 +37,11 @@ namespace GameOfLife2
             _rows = pictureBox1.Height / _resolution;
             _columns = pictureBox1.Width / _resolution;
             _field = new bool[_columns, _rows];
+
             Random _random = new Random();
+
+            _history.Clear();
+            _history.Push(_field);
 
             for (int x = 0; x < _columns; x++)
             {
@@ -116,11 +120,10 @@ namespace GameOfLife2
 
             _field = newField;
 
-            if (_history != null)
-            {
-                _history.Push(_field);
-                tBarGeneration.Maximum = _history.Count - 1; // Обновляем максимальное значение ползунка
-            }
+
+
+            _history.Push(_field);
+            tBarGeneration.Maximum = _history.Count - 1; // Обновляем максимальное значение ползунка
 
             pictureBox1.Refresh();
             Text = $"Generation {++_currentGeneration}";
@@ -164,11 +167,6 @@ namespace GameOfLife2
         {
             StartGame();
         }
-
-        //private void bStop_Click(object sender, EventArgs e)
-        //{
-        //    EndGame();
-        //}
 
         private void bPause_Click(object sender, EventArgs e)
         {
@@ -270,28 +268,15 @@ namespace GameOfLife2
         private void tBarGeneration_ValueChanged(object sender, EventArgs e)
         {
             int value = tBarGeneration.Value;
-
-            // Перемотайте на нужное поколение в истории
-            if (_history != null)
+            if (value < _history.Count)
             {
-                while (_history.Count > value)
-                {
-                    _history.Pop();
-                }
-
-                if (_history.Count > 0)
-                {
-                    _field = _history.Peek(); // Получаем состояние текущего поколения
-                    RedrawField();
-                    Text = $"Generation {_currentGeneration - (_history.Count - 1)}";
-                }
-                else
-                {
-                    // Если история пуста, просто отображаем текущее поколение
-                    RedrawField();
-                    Text = $"Generation {_currentGeneration}";
-                }
+                _field = _history.ElementAt(value);
+                RedrawField();
             }
         }
+
+        //Реализовать удаление неактуальной истории если игра продолжена с перемотки.
+        //Реализовать Добавление фигур
+        //Реализовать картинки вместо пикселей
     }
 }

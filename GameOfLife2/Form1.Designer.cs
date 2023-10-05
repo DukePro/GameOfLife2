@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             splitContainer1 = new SplitContainer();
+            tBarGeneration = new TrackBar();
+            label4 = new Label();
             tBarSpeed = new TrackBar();
             nudSpeed = new NumericUpDown();
             label3 = new Label();
@@ -41,18 +43,16 @@
             label1 = new Label();
             pictureBox1 = new PictureBox();
             timer1 = new System.Windows.Forms.Timer(components);
-            label4 = new Label();
-            tBarGeneration = new TrackBar();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tBarGeneration).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tBarSpeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudSpeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudDencity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudResolution).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)tBarGeneration).BeginInit();
             SuspendLayout();
             // 
             // splitContainer1
@@ -65,7 +65,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(tBarGeneration);
             splitContainer1.Panel1.Controls.Add(label4);
             splitContainer1.Panel1.Controls.Add(tBarSpeed);
             splitContainer1.Panel1.Controls.Add(nudSpeed);
@@ -76,6 +75,7 @@
             splitContainer1.Panel1.Controls.Add(nudResolution);
             splitContainer1.Panel1.Controls.Add(bStart);
             splitContainer1.Panel1.Controls.Add(label1);
+            splitContainer1.Panel1.Controls.Add(tBarGeneration);
             // 
             // splitContainer1.Panel2
             // 
@@ -83,6 +83,25 @@
             splitContainer1.Size = new Size(1254, 568);
             splitContainer1.SplitterDistance = 171;
             splitContainer1.TabIndex = 0;
+            // 
+            // tBarGeneration
+            // 
+            tBarGeneration.Location = new Point(-2, 315);
+            tBarGeneration.Name = "tBarGeneration";
+            tBarGeneration.RightToLeft = RightToLeft.Yes;
+            tBarGeneration.Size = new Size(171, 45);
+            tBarGeneration.TabIndex = 10;
+            tBarGeneration.ValueChanged += tBarGeneration_ValueChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(23, 295);
+            label4.Name = "label4";
+            label4.Size = new Size(61, 17);
+            label4.TabIndex = 9;
+            label4.Text = "История";
             // 
             // tBarSpeed
             // 
@@ -200,25 +219,6 @@
             // 
             timer1.Tick += timer1_Tick;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(23, 295);
-            label4.Name = "label4";
-            label4.Size = new Size(61, 17);
-            label4.TabIndex = 9;
-            label4.Text = "История";
-            // 
-            // tBarGeneration
-            // 
-            tBarGeneration.Location = new Point(-2, 315);
-            tBarGeneration.Name = "tBarGeneration";
-            tBarGeneration.Size = new Size(171, 45);
-            tBarGeneration.TabIndex = 10;
-            tBarGeneration.ValueChanged += tBarGeneration_ValueChanged;
-            splitContainer1.Panel1.Controls.Add(tBarGeneration);
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -234,12 +234,12 @@
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)tBarGeneration).EndInit();
             ((System.ComponentModel.ISupportInitialize)tBarSpeed).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudSpeed).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudDencity).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudResolution).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)tBarGeneration).EndInit();
             ResumeLayout(false);
         }
 
