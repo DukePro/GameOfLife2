@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             splitContainer1 = new SplitContainer();
-            tBarGeneration = new TrackBar();
             label4 = new Label();
             tBarSpeed = new TrackBar();
             nudSpeed = new NumericUpDown();
@@ -41,17 +40,18 @@
             nudResolution = new NumericUpDown();
             bStart = new Button();
             label1 = new Label();
+            tBarGeneration = new TrackBar();
             pictureBox1 = new PictureBox();
             timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)tBarGeneration).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tBarSpeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudSpeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudDencity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudResolution).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tBarGeneration).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -83,15 +83,6 @@
             splitContainer1.Size = new Size(1254, 568);
             splitContainer1.SplitterDistance = 171;
             splitContainer1.TabIndex = 0;
-            // 
-            // tBarGeneration
-            // 
-            tBarGeneration.Location = new Point(-2, 315);
-            tBarGeneration.Name = "tBarGeneration";
-            tBarGeneration.RightToLeft = RightToLeft.Yes;
-            tBarGeneration.Size = new Size(171, 45);
-            tBarGeneration.TabIndex = 10;
-            tBarGeneration.ValueChanged += tBarGeneration_ValueChanged;
             // 
             // label4
             // 
@@ -182,7 +173,7 @@
             nudResolution.Size = new Size(132, 23);
             nudResolution.TabIndex = 0;
             nudResolution.TextAlign = HorizontalAlignment.Right;
-            nudResolution.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            nudResolution.Value = new decimal(new int[] { 8, 0, 0, 0 });
             // 
             // bStart
             // 
@@ -205,6 +196,15 @@
             label1.TabIndex = 0;
             label1.Text = "Размер клетки в px";
             // 
+            // tBarGeneration
+            // 
+            tBarGeneration.Location = new Point(-2, 315);
+            tBarGeneration.Name = "tBarGeneration";
+            tBarGeneration.RightToLeft = RightToLeft.Yes;
+            tBarGeneration.Size = new Size(171, 45);
+            tBarGeneration.TabIndex = 10;
+            tBarGeneration.ValueChanged += tBarGeneration_ValueChanged;
+            // 
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Fill;
@@ -214,6 +214,9 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.MouseMove += pictureBox1_MouseMove;
+            pictureBox1.MouseClick += pictureBox1_MouseClick;
+            pictureBox1.MouseDown += pictureBox1_MouseDown;
+            pictureBox1.MouseUp += pictureBox1_MouseUp;
             // 
             // timer1
             // 
@@ -234,11 +237,11 @@
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)tBarGeneration).EndInit();
             ((System.ComponentModel.ISupportInitialize)tBarSpeed).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudSpeed).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudDencity).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudResolution).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tBarGeneration).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }

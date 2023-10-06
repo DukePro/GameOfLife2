@@ -1,3 +1,5 @@
+using System.Drawing.Drawing2D;
+
 namespace GameOfLife2
 {
     public partial class Form1 : Form
@@ -10,6 +12,7 @@ namespace GameOfLife2
         private bool[,] _field;
         private bool _isPaused = false;
         private bool _updatingSpeed = false;
+        private bool _isMouseDown = false;
         private Stack<bool[,]> _history = new Stack<bool[,]>();
 
         public Form1()
@@ -85,9 +88,34 @@ namespace GameOfLife2
             }
         }
 
+        private void DrawGrid()
+        {
+            if (_resolution > 1)
+            {
+                if (_resolution > 2)
+                {
+                    _graphics.SmoothingMode = SmoothingMode.HighQuality;
+                }
+
+                Pen gridPen = new Pen(Color.FromArgb(51, 51, 51));
+                int cellSize = _resolution;
+
+                for (int x = 0; x < pictureBox1.Width; x += cellSize)
+                {
+                    _graphics.DrawLine(gridPen, x, 0, x, pictureBox1.Height);
+                }
+
+                for (int y = 0; y < pictureBox1.Height; y += cellSize)
+                {
+                    _graphics.DrawLine(gridPen, 0, y, pictureBox1.Width, y);
+
+                }
+            }
+        }
+
         private void GenerateCells()
         {
-            _graphics.Clear(Color.White);
+            _graphics.Clear(Color.Black);
             var newField = new bool[_columns, _rows];
             timer1.Interval = (int)nudSpeed.Value;
 
@@ -113,20 +141,36 @@ namespace GameOfLife2
 
                     if (hasLife == true)
                     {
-                        _graphics.FillRectangle(Brushes.Black, x * _resolution, y * _resolution, _resolution, _resolution);
+                        DrawCell(x, y);
                     }
                 }
             }
 
             _field = newField;
-
-
-
             _history.Push(_field);
-            tBarGeneration.Maximum = _history.Count - 1; // Обновляем максимальное значение ползунка
+            tBarGeneration.Maximum = _history.Count - 1;
+
+            DrawGrid();
 
             pictureBox1.Refresh();
             Text = $"Generation {++_currentGeneration}";
+        }
+
+        private void DrawCell(int x, int y)
+        {
+            if (!_isPaused)
+            {
+                _graphics.SmoothingMode = SmoothingMode.HighQuality;
+            }
+            else
+            {
+                _graphics.SmoothingMode = SmoothingMode.None;
+            }
+
+            using (SolidBrush brush = new SolidBrush(Color.LimeGreen))
+            {
+                _graphics.FillRectangle(brush, x * _resolution, y * _resolution, _resolution, _resolution);
+            }
         }
 
         private int CountClosestCells(int x, int y)
@@ -173,42 +217,61 @@ namespace GameOfLife2
             PauseGame();
         }
 
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            _isMouseDown = true;
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            _isMouseDown = false;
+        }
+
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isMouseDown)
+            {
+                UserDraw(sender, e);
+            }
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (_isMouseDown)
+            {
+                UserDraw(sender, e);
+            }
+        }
+
+        private void UserDraw(object sender, MouseEventArgs e)
         {
             if (!timer1.Enabled && _isPaused == false)
             {
                 return;
             }
 
-            if (e.Button == MouseButtons.Left)
-            {
-                int x = e.Location.X / _resolution;
-                int y = e.Location.Y / _resolution;
-                bool validationPassed = ValidateMousePos(x, y);
+            int x = e.Location.X / _resolution;
+            int y = e.Location.Y / _resolution;
+            bool validationPassed = ValidateMousePos(x, y);
 
-                if (validationPassed)
+            if (validationPassed)
+            {
+                if (e.Button == MouseButtons.Left)
                 {
                     _field[x, y] = true;
-                    RedrawField();
                 }
-            }
-            if (e.Button == MouseButtons.Right)
-            {
-                int x = e.Location.X / _resolution;
-                int y = e.Location.Y / _resolution;
-                bool validationPassed = ValidateMousePos(x, y);
-
-                if (validationPassed)
+                else if (e.Button == MouseButtons.Right)
                 {
                     _field[x, y] = false;
-                    RedrawField();
                 }
+
+                RedrawField();
             }
         }
 
         private void RedrawField()
         {
-            _graphics.Clear(Color.White);
+            _graphics.Clear(Color.Black);
 
             for (int x = 0; x < _columns; x++)
             {
@@ -216,11 +279,12 @@ namespace GameOfLife2
                 {
                     if (_field[x, y])
                     {
-                        _graphics.FillRectangle(Brushes.Black, x * _resolution, y * _resolution, _resolution, _resolution);
+                        DrawCell(x, y);
                     }
                 }
             }
 
+            DrawGrid();
             pictureBox1.Refresh();
         }
 
@@ -276,8 +340,11 @@ namespace GameOfLife2
         }
 
         //Пофиксить блокировку настроек (Сделать кнопку старт стоп и рестарт одной)
+        //Реализовать старт как с рандомным расположением точек, так и с предварительно нарисованными
         //Реализовать удаление неактуальной истории если игра продолжена с перемотки.
         //Реализовать Добавление фигур
         //Реализовать картинки вместо пикселей
+
+
     }
 }
