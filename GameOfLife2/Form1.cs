@@ -33,8 +33,8 @@ namespace GameOfLife2
             bPause.Text = "Pause";
             bStart.Text = "Restart";
 
-            nudResolution.Enabled = false;
-            nudDencity.Enabled = false;
+            //nudResolution.Enabled = false;
+            //nudDencity.Enabled = false;
 
             _resolution = (int)nudResolution.Value;
             _rows = pictureBox1.Height / _resolution;
@@ -295,8 +295,8 @@ namespace GameOfLife2
 
         private void nudSpeed_ValueChanged(object sender, EventArgs e)
         {
-            UpdateSpeedFromControls();
             UpdateTrackBarFromControls();
+            UpdateSpeedFromControls();
         }
 
         private void tBarSpeed_ValueChanged(object sender, EventArgs e)
@@ -339,7 +339,6 @@ namespace GameOfLife2
             }
         }
 
-        //Пофиксить блокировку настроек (Сделать кнопку старт стоп и рестарт одной)
         //Реализовать старт как с рандомным расположением точек, так и с предварительно нарисованными
         //Реализовать удаление неактуальной истории если игра продолжена с перемотки.
         //Реализовать Добавление фигур
