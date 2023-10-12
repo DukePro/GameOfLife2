@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             splitContainer1 = new SplitContainer();
+            cBoxRandom = new CheckBox();
             label4 = new Label();
             tBarSpeed = new TrackBar();
             nudSpeed = new NumericUpDown();
@@ -65,6 +66,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(cBoxRandom);
             splitContainer1.Panel1.Controls.Add(label4);
             splitContainer1.Panel1.Controls.Add(tBarSpeed);
             splitContainer1.Panel1.Controls.Add(nudSpeed);
@@ -84,11 +86,24 @@
             splitContainer1.SplitterDistance = 171;
             splitContainer1.TabIndex = 0;
             // 
+            // cBoxRandom
+            // 
+            cBoxRandom.AutoSize = true;
+            cBoxRandom.Checked = true;
+            cBoxRandom.CheckState = CheckState.Checked;
+            cBoxRandom.Location = new Point(31, 172);
+            cBoxRandom.Name = "cBoxRandom";
+            cBoxRandom.Size = new Size(71, 19);
+            cBoxRandom.TabIndex = 11;
+            cBoxRandom.Text = "Random";
+            cBoxRandom.UseVisualStyleBackColor = true;
+            cBoxRandom.CheckedChanged += cBoxRandom_CheckedChanged;
+            // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(23, 295);
+            label4.Location = new Point(23, 324);
             label4.Name = "label4";
             label4.Size = new Size(61, 17);
             label4.TabIndex = 9;
@@ -96,7 +111,7 @@
             // 
             // tBarSpeed
             // 
-            tBarSpeed.Location = new Point(3, 256);
+            tBarSpeed.Location = new Point(3, 285);
             tBarSpeed.Maximum = 1000;
             tBarSpeed.Minimum = 1;
             tBarSpeed.Name = "tBarSpeed";
@@ -111,7 +126,7 @@
             // 
             nudSpeed.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             nudSpeed.Increment = new decimal(new int[] { 30, 0, 0, 0 });
-            nudSpeed.Location = new Point(23, 227);
+            nudSpeed.Location = new Point(23, 256);
             nudSpeed.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             nudSpeed.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudSpeed.Name = "nudSpeed";
@@ -125,7 +140,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(23, 207);
+            label3.Location = new Point(23, 236);
             label3.Name = "label3";
             label3.Size = new Size(66, 17);
             label3.TabIndex = 7;
@@ -134,7 +149,7 @@
             // bPause
             // 
             bPause.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            bPause.Location = new Point(23, 168);
+            bPause.Location = new Point(23, 197);
             bPause.Name = "bPause";
             bPause.Size = new Size(132, 36);
             bPause.TabIndex = 5;
@@ -151,7 +166,7 @@
             nudDencity.Size = new Size(132, 23);
             nudDencity.TabIndex = 2;
             nudDencity.TextAlign = HorizontalAlignment.Right;
-            nudDencity.Value = new decimal(new int[] { 13, 0, 0, 0 });
+            nudDencity.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // label2
             // 
@@ -198,7 +213,7 @@
             // 
             // tBarGeneration
             // 
-            tBarGeneration.Location = new Point(-2, 315);
+            tBarGeneration.Location = new Point(-2, 344);
             tBarGeneration.Name = "tBarGeneration";
             tBarGeneration.RightToLeft = RightToLeft.Yes;
             tBarGeneration.Size = new Size(171, 45);
@@ -262,5 +277,6 @@
         private TrackBar tBarSpeed;
         private TrackBar tBarGeneration;
         private Label label4;
+        private CheckBox cBoxRandom;
     }
 }

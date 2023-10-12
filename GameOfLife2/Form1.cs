@@ -13,6 +13,7 @@ namespace GameOfLife2
         private bool _isPaused = false;
         private bool _updatingSpeed = false;
         private bool _isMouseDown = false;
+        private bool _isRandom = true;
         private Stack<bool[,]> _history = new Stack<bool[,]>();
 
         public Form1()
@@ -27,12 +28,14 @@ namespace GameOfLife2
             {
                 EndGame();
             }
-
+            
+            RedrawField();
             _currentGeneration = 0;
             Text = $"Generation {_currentGeneration}";
             bPause.Text = "Pause";
             bStart.Text = "Restart";
 
+            //cBoxRandom.Enabled = false;
             //nudResolution.Enabled = false;
             //nudDencity.Enabled = false;
 
@@ -42,21 +45,25 @@ namespace GameOfLife2
             _field = new bool[_columns, _rows];
 
             Random _random = new Random();
-
+            
             _history.Clear();
             _history.Push(_field);
 
-            for (int x = 0; x < _columns; x++)
+            if (_isRandom == true)
             {
-                for (int y = 0; y < _rows; y++)
+                for (int x = 0; x < _columns; x++)
                 {
-                    _field[x, y] = _random.Next((int)nudDencity.Value) == 0;
+                    for (int y = 0; y < _rows; y++)
+                    {
+                        _field[x, y] = _random.Next((int)nudDencity.Value) == 0;
+                    }
                 }
             }
 
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             _graphics = Graphics.FromImage(pictureBox1.Image);
             timer1.Start();
+            
         }
 
         private void EndGame()
@@ -108,7 +115,6 @@ namespace GameOfLife2
                 for (int y = 0; y < pictureBox1.Height; y += cellSize)
                 {
                     _graphics.DrawLine(gridPen, 0, y, pictureBox1.Width, y);
-
                 }
             }
         }
@@ -138,7 +144,6 @@ namespace GameOfLife2
                     {
                         newField[x, y] = _field[x, y];
                     }
-
                     if (hasLife == true)
                     {
                         DrawCell(x, y);
@@ -154,6 +159,11 @@ namespace GameOfLife2
 
             pictureBox1.Refresh();
             Text = $"Generation {++_currentGeneration}";
+            
+            if (_isPaused)
+            {
+                PauseGame();
+            }
         }
 
         private void DrawCell(int x, int y)
@@ -339,11 +349,21 @@ namespace GameOfLife2
             }
         }
 
+        private void cBoxRandom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cBoxRandom.Checked) 
+            {
+                _isRandom = true;
+            }
+            else
+            {
+                _isRandom = false;
+                _isPaused = true;
+            }
+        }
+
         //Реализовать старт как с рандомным расположением точек, так и с предварительно нарисованными
         //Реализовать удаление неактуальной истории если игра продолжена с перемотки.
         //Реализовать Добавление фигур
-        //Реализовать картинки вместо пикселей
-
-
     }
 }
